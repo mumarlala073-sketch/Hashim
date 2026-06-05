@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Muhammad Hashim Khan - Beginner Web Developer | Front-End Developer | UI/UX Enthusiast. Turning ideas into beautiful and responsive websites.">
+<meta name="keywords" content="Hashim Khan, web developer, front-end developer, HTML, CSS, JavaScript, portfolio">
+<meta name="author" content="Muhammad Hashim Khan">
+<title>Muhammad Hashim Khan | Web Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+--neon-blue:#00d4ff;
+--neon-purple:#a855f7;
+--neon-pink:#ec4899;
+--dark-bg:#030712;
+--dark-surface:#0d1117;
+--dark-card:#111827;
+--dark-card2:#161f2e;
+--glass-bg:rgba(255,255,255,0.04);
+--glass-border:rgba(255,255,255,0.08);
+--text-primary:#f0f6ff;
+--text-secondary:#94a3b8;
+--text-muted:#475569;
+--gradient-hero:linear-gradient(135deg,#030712 0%,#0a0f1e 40%,#050d1a 100%);
+--gradient-blue:linear-gradient(135deg,#00d4ff,#0080ff);
+--gradient-purple:linear-gradient(135deg,#a855f7,#6366f1);
+--gradient-pink:linear-gradient(135deg,#ec4899,#a855f7);
+--gradient-glow:linear-gradient(135deg,#00d4ff22,#a855f722);
+--font-display:'Syne',sans-serif;
+--font-body:'DM Sans',sans-serif;
+--font-mono:'JetBrains Mono',monospace;
+}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{background:var(--dark-bg);color:var(--text-primary);font-family:var(--font-body);cursor:none;overflow-x:hidden}
+
+/* CUSTOM CURSOR */
+#cursor{position:fixed;width:12px;height:12px;background:var(--neon-blue);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:transform 0.1s,background 0.2s;mix-blend-mode:screen}
+#cursor-ring{position:fixed;width:36px;height:36px;border:1.5px solid rgba(0,212,255,0.5);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:transform 0.15s ease,width 0.2s,height 0.2s,opacity 0.2s}
+body:hover #cursor{opacity:1}
+
+/* SCROLL PROGRESS */
+#scroll-progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--neon-blue),var(--neon-purple),var(--neon-pink));z-index:9999;transition:width 0.1s;box-shadow:0 0 10px var(--neon-blue)}
+
+/* LOADING SCREEN */
+#loader{position:fixed;inset:0;background:var(--dark-bg);z-index:99990;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;transition:opacity 0.6s,visibility 0.6s}
+#loader.hidden{opacity:0;visibility:hidden}
+.loader-logo{font-family:var(--font-display);font-size:2rem;font-weight:800;background:var(--gradient-blue);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:pulse 1.5s ease-in-out infinite}
+.loader-bar{width:200px;height:2px;background:rgba(255,255,255,0.1);border-radius:99px;overflow:hidden}
+.loader-fill{height:100%;background:linear-gradient(90deg,var(--neon-blue),var(--neon-purple));animation:loadfill 2s ease forwards}
+.loader-text{font-family:var(--font-mono);font-size:0.75rem;color:var(--text-muted);letter-spacing:2px}
+@keyframes loadfill{from{width:0}to{width:100%}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.6}}
+
+/* CANVAS PARTICLES */
+#particles-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.6}
+
+/* NAVBAR */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 5%;transition:all 0.4s}
+nav.scrolled{background:rgba(3,7,18,0.8);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--glass-border);padding-top:0}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:70px}
+.nav-logo{font-family:var(--font-display);font-size:1.4rem;font-weight:800;background:var(--gradient-blue);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:var(--text-secondary);text-decoration:none;font-size:0.9rem;font-weight:500;letter-spacing:0.5px;transition:color 0.2s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1.5px;background:var(--gradient-blue);transition:width 0.3s}
+.nav-links a:hover{color:var(--neon-blue)}
+.nav-links a:hover::after{width:100%}
+.nav-cta{padding:8px 22px;background:linear-gradient(135deg,#00d4ff22,#a855f722);border:1px solid rgba(0,212,255,0.3);border-radius:8px;color:var(--neon-blue)!important;font-weight:600!important;transition:all 0.3s!important}
+.nav-cta:hover{background:linear-gradient(135deg,#00d4ff33,#a855f733)!important;box-shadow:0 0 20px rgba(0,212,255,0.2)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:5px}
+.hamburger span{display:block;width:24px;height:2px;background:var(--text-primary);transition:all 0.3s}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:100px 5% 60px}
+.hero-bg-orb{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none}
+.orb1{width:600px;height:600px;background:radial-gradient(circle,rgba(0,212,255,0.08) 0%,transparent 70%);top:-100px;right:-100px}
+.orb2{width:500px;height:500px;background:radial-gradient(circle,rgba(168,85,247,0.08) 0%,transparent 70%);bottom:-100px;left:-100px}
+.orb3{width:300px;height:300px;background:radial-gradient(circle,rgba(236,72,153,0.06) 0%,transparent 70%);top:40%;left:40%}
+.hero-content{position:relative;z-index:1;text-align:center;max-width:900px;margin:0 auto}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.2);border-radius:99px;font-family:var(--font-mono);font-size:0.78rem;color:var(--neon-blue);letter-spacing:1px;margin-bottom:28px;animation:fadeDown 0.8s ease both}
+.hero-badge::before{content:'';width:8px;height:8px;background:var(--neon-blue);border-radius:50%;animation:blink 1.5s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1;box-shadow:0 0 6px var(--neon-blue)}50%{opacity:0.4;box-shadow:none}}
+.hero-name{font-family:var(--font-display);font-size:clamp(2.8rem,7vw,6rem);font-weight:800;line-height:1.05;margin-bottom:16px;animation:fadeUp 0.9s 0.2s ease both}
+.hero-name .highlight{background:linear-gradient(135deg,#00d4ff,#a855f7,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-tagline{font-size:clamp(1rem,2.5vw,1.35rem);color:var(--text-secondary);margin-bottom:14px;font-weight:300;animation:fadeUp 0.9s 0.35s ease both}
+.hero-typing-wrap{font-family:var(--font-mono);font-size:clamp(0.85rem,2vw,1.05rem);color:var(--neon-blue);margin-bottom:36px;height:1.5em;animation:fadeUp 0.9s 0.5s ease both}
+#typed-text::after{content:'|';animation:blink 0.8s infinite}
+.hero-buttons{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;animation:fadeUp 0.9s 0.65s ease both}
+.btn{padding:14px 32px;border-radius:10px;font-family:var(--font-body);font-size:0.95rem;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all 0.3s;cursor:none;border:none;letter-spacing:0.3px}
+.btn-primary{background:linear-gradient(135deg,#00d4ff,#0080ff);color:#000;box-shadow:0 0 30px rgba(0,212,255,0.3)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 50px rgba(0,212,255,0.5)}
+.btn-secondary{background:transparent;color:var(--text-primary);border:1px solid var(--glass-border)}
+.btn-secondary:hover{background:var(--glass-bg);border-color:rgba(168,85,247,0.4);color:var(--neon-purple);transform:translateY(-2px)}
+.hero-scroll{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;animation:fadeUp 1s 1s ease both;color:var(--text-muted);font-size:0.75rem;letter-spacing:1px}
+.scroll-line{width:1.5px;height:50px;background:linear-gradient(to bottom,var(--neon-blue),transparent);animation:scrollLine 1.5s ease-in-out infinite}
+@keyframes scrollLine{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+
+/* SECTIONS */
+section{position:relative;z-index:1;padding:100px 5%}
+.section-label{font-family:var(--font-mono);font-size:0.75rem;color:var(--neon-blue);letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;display:block}
+.section-title{font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);font-weight:800;margin-bottom:16px;line-height:1.1}
+.section-title .grad{background:var(--gradient-blue);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.section-sub{color:var(--text-secondary);font-size:1rem;max-width:540px;line-height:1.7;margin-bottom:60px}
+.text-center{text-align:center}
+.text-center .section-sub{margin-left:auto;margin-right:auto}
+.reveal{opacity:0;transform:translateY(40px);transition:opacity 0.7s,transform 0.7s}
+.reveal.visible{opacity:1;transform:none}
+
+/* DIVIDER */
+.section-divider{position:absolute;left:5%;right:5%;top:0;height:1px;background:linear-gradient(90deg,transparent,var(--glass-border),transparent)}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:60px;align-items:center}
+.about-img-wrap{position:relative}
+.about-img-frame{width:100%;aspect-ratio:1;border-radius:24px;overflow:hidden;background:linear-gradient(135deg,rgba(0,212,255,0.1),rgba(168,85,247,0.1));border:1px solid var(--glass-border);display:flex;align-items:center;justify-content:center;position:relative}
+.about-img-frame::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,212,255,0.05),rgba(168,85,247,0.05))}
+.about-avatar{font-family:var(--font-display);font-size:8rem;font-weight:800;background:var(--gradient-blue);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;user-select:none}
+.about-glow{position:absolute;width:200px;height:200px;background:radial-gradient(circle,rgba(0,212,255,0.15),transparent 70%);top:-30px;right:-30px;pointer-events:none}
+.about-badge-wrap{position:absolute;bottom:-16px;left:50%;transform:translateX(-50%);display:flex;gap:10px;white-space:nowrap}
+.about-badge{padding:8px 16px;background:var(--dark-card);border:1px solid var(--glass-border);border-radius:8px;font-size:0.78rem;font-weight:600;color:var(--neon-blue);backdrop-filter:blur(10px)}
+.about-text h3{font-family:var(--font-display);font-size:1.8rem;font-weight:700;margin-bottom:16px}
+.about-text p{color:var(--text-secondary);line-height:1.8;margin-bottom:16px;font-size:0.95rem}
+.about-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:36px}
+.stat-card{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:12px;padding:20px 16px;text-align:center;transition:all 0.3s}
+.stat-card:hover{border-color:rgba(0,212,255,0.3);background:rgba(0,212,255,0.05)}
+.stat-num{font-family:var(--font-display);font-size:2rem;font-weight:800;background:var(--gradient-blue);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block}
+.stat-label{font-size:0.78rem;color:var(--text-muted);margin-top:4px;font-weight:500}
+
+/* EXPERIENCE */
+.experience-wrap{max-width:800px;margin:0 auto}
+.exp-card{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:16px;padding:28px;position:relative;overflow:hidden;transition:all 0.3s}
+.exp-card:hover{border-color:rgba(0,212,255,0.3)}
+.exp-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:linear-gradient(to bottom,var(--neon-blue),var(--neon-purple))}
+.exp-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;gap:16px;flex-wrap:wrap}
+.exp-role{font-family:var(--font-display);font-size:1.2rem;font-weight:700}
+.exp-period{font-family:var(--font-mono);font-size:0.78rem;color:var(--neon-blue);background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.2);padding:4px 12px;border-radius:99px;white-space:nowrap}
+.exp-company{color:var(--text-muted);font-size:0.85rem;margin-bottom:14px}
+.exp-list{list-style:none;display:flex;flex-direction:column;gap:8px}
+.exp-list li{color:var(--text-secondary);font-size:0.9rem;padding-left:18px;position:relative}
+.exp-list li::before{content:'▸';position:absolute;left:0;color:var(--neon-blue);font-size:0.75rem;top:2px}
+
+/* COUNTERS */
+.counters-section{background:linear-gradient(135deg,rgba(0,212,255,0.03),rgba(168,85,247,0.03));border-top:1px solid var(--glass-border);border-bottom:1px solid var(--glass-border)}
+.counters-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--glass-border)}
+.counter-item{background:var(--dark-bg);padding:50px 20px;text-align:center}
+.counter-num{font-family:var(--font-display);font-size:clamp(2.5rem,5vw,4rem);font-weight:800;background:var(--gradient-blue);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
+.counter-suffix{font-family:var(--font-display);font-size:2rem;font-weight:800;background:var(--gradient-blue);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.counter-label{color:var(--text-secondary);font-size:0.88rem;margin-top:8px;font-weight:500}
+
+/* SKILLS */
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.skill-card{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:16px;padding:24px;transition:all 0.4s;position:relative;overflow:hidden}
+.skill-card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity 0.4s;border-radius:16px}
+.skill-card:hover{transform:translateY(-6px);border-color:transparent}
+.skill-card.blue::before{background:linear-gradient(135deg,rgba(0,212,255,0.08),rgba(0,128,255,0.04));box-shadow:inset 0 0 0 1px rgba(0,212,255,0.3)}
+.skill-card.purple::before{background:linear-gradient(135deg,rgba(168,85,247,0.08),rgba(99,102,241,0.04));box-shadow:inset 0 0 0 1px rgba(168,85,247,0.3)}
+.skill-card.pink::before{background:linear-gradient(135deg,rgba(236,72,153,0.08),rgba(168,85,247,0.04));box-shadow:inset 0 0 0 1px rgba(236,72,153,0.3)}
+.skill-card:hover::before{opacity:1}
+.skill-icon{font-size:2.2rem;margin-bottom:14px;line-height:1}
+.skill-name{font-family:var(--font-display);font-size:1.1rem;font-weight:700;margin-bottom:8px}
+.skill-desc{font-size:0.82rem;color:var(--text-muted);margin-bottom:16px}
+.skill-bar-wrap{background:rgba(255,255,255,0.05);border-radius:99px;height:5px;overflow:hidden}
+.skill-bar{height:100%;border-radius:99px;width:0;transition:width 1.5s cubic-bezier(0.16,1,0.3,1)}
+.skill-bar.blue{background:linear-gradient(90deg,var(--neon-blue),#0080ff)}
+.skill-bar.purple{background:linear-gradient(90deg,var(--neon-purple),#6366f1)}
+.skill-bar.pink{background:linear-gradient(90deg,var(--neon-pink),var(--neon-purple))}
+.skill-pct{font-family:var(--font-mono);font-size:0.75rem;color:var(--text-muted);margin-top:6px;text-align:right}
+
+/* PROJECTS */
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
+.project-card{background:var(--dark-card);border:1px solid var(--glass-border);border-radius:16px;overflow:hidden;transition:all 0.4s;position:relative;group:true}
+.project-card:hover{transform:translateY(-8px) scale(1.01);border-color:rgba(0,212,255,0.2);box-shadow:0 30px 60px rgba(0,0,0,0.5),0 0 40px rgba(0,212,255,0.08)}
+.project-img{height:160px;position:relative;overflow:hidden}
+.project-img-bg{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:3.5rem;position:relative}
+.proj-calc{background:linear-gradient(135deg,#0a1628,#1a2a4a)}
+.proj-tasbeeh{background:linear-gradient(135deg,#0d1f15,#1a3d27)}
+.proj-weather{background:linear-gradient(135deg,#0f1625,#1a2d45)}
+.proj-portfolio{background:linear-gradient(135deg,#1a0d2e,#2d1a4a)}
+.proj-todo{background:linear-gradient(135deg,#1a0d0d,#3d1a1a)}
+.proj-ecom{background:linear-gradient(135deg,#1a0d28,#2a1a40)}
+.proj-currency{background:linear-gradient(135deg,#0d1a1a,#1a3030)}
+.proj-restaurant{background:linear-gradient(135deg,#1a1200,#3d2e00)}
+.project-img-overlay{position:absolute;inset:0;background:rgba(0,0,0,0);transition:background 0.3s;display:flex;align-items:center;justify-content:center;gap:12px;opacity:0;transition:all 0.3s}
+.project-card:hover .project-img-overlay{background:rgba(0,0,0,0.6);opacity:1}
+.project-body{padding:20px}
+.project-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.project-tag{font-family:var(--font-mono);font-size:0.68rem;color:var(--neon-blue);background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.15);padding:3px 8px;border-radius:4px}
+.project-title{font-family:var(--font-display);font-size:1.05rem;font-weight:700;margin-bottom:8px}
+.project-desc{font-size:0.82rem;color:var(--text-secondary);line-height:1.6;margin-bottom:16px}
+.project-buttons{display:flex;gap:10px}
+.btn-sm{padding:8px 16px;font-size:0.8rem;border-radius:7px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:all 0.3s;cursor:none;border:none}
+.btn-live{background:linear-gradient(135deg,var(--neon-blue),#0080ff);color:#000}
+.btn-live:hover{box-shadow:0 0 20px rgba(0,212,255,0.4);transform:translateY(-2px)}
+.btn-github{background:transparent;border:1px solid var(--glass-border);color:var(--text-secondary)}
+.btn-github:hover{border-color:rgba(168,85,247,0.4);color:var(--neon-purple);transform:translateY(-2px)}
+
+/* SERVICES */
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+.service-card{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:16px;padding:32px 24px;transition:all 0.4s;text-align:center;position:relative;overflow:hidden}
+.service-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;transform:scaleX(0);transition:transform 0.4s;background:var(--gradient-blue)}
+.service-card:hover{transform:translateY(-6px);border-color:rgba(0,212,255,0.2)}
+.service-card:hover::after{transform:scaleX(1)}
+.service-icon{font-size:2.5rem;margin-bottom:16px;display:block;line-height:1;transition:transform 0.3s}
+.service-card:hover .service-icon{transform:scale(1.15) rotate(-5deg)}
+.service-title{font-family:var(--font-display);font-size:1.05rem;font-weight:700;margin-bottom:10px}
+.service-desc{font-size:0.83rem;color:var(--text-secondary);line-height:1.7}
+
+/* TESTIMONIALS */
+.testimonials-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.testi-card{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:16px;padding:28px;position:relative;transition:all 0.3s}
+.testi-card:hover{border-color:rgba(168,85,247,0.3)}
+.testi-quote{font-size:3rem;line-height:0.5;color:var(--neon-purple);opacity:0.5;font-family:serif;margin-bottom:8px}
+.testi-text{color:var(--text-secondary);font-size:0.9rem;line-height:1.7;margin-bottom:20px;font-style:italic}
+.testi-author{display:flex;align-items:center;gap:12px}
+.testi-avatar{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.9rem;flex-shrink:0}
+.testi-name{font-weight:600;font-size:0.88rem}
+.testi-role{font-size:0.75rem;color:var(--text-muted)}
+.stars{color:#f59e0b;font-size:0.8rem;margin-bottom:12px;letter-spacing:2px}
+
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:60px;align-items:start}
+.contact-info h3{font-family:var(--font-display);font-size:1.6rem;font-weight:700;margin-bottom:16px}
+.contact-info p{color:var(--text-secondary);line-height:1.7;margin-bottom:32px;font-size:0.9rem}
+.contact-detail{display:flex;align-items:center;gap:14px;margin-bottom:20px;padding:16px;background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:12px;transition:all 0.3s}
+.contact-detail:hover{border-color:rgba(0,212,255,0.3)}
+.contact-detail-icon{width:42px;height:42px;background:linear-gradient(135deg,rgba(0,212,255,0.15),rgba(168,85,247,0.15));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+.contact-detail-text span{display:block;font-size:0.75rem;color:var(--text-muted);margin-bottom:2px}
+.contact-detail-text a{color:var(--text-primary);text-decoration:none;font-size:0.9rem;font-weight:500}
+.social-links{display:flex;gap:12px;margin-top:28px}
+.social-btn{width:44px;height:44px;background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:10px;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:1.2rem;transition:all 0.3s}
+.social-btn:hover{transform:translateY(-3px)}
+.social-btn.gh:hover{border-color:rgba(0,212,255,0.5);background:rgba(0,212,255,0.08)}
+.social-btn.li:hover{border-color:rgba(0,119,181,0.5);background:rgba(0,119,181,0.08)}
+.social-btn.fb:hover{border-color:rgba(24,119,242,0.5);background:rgba(24,119,242,0.08)}
+.social-btn.ig:hover{border-color:rgba(236,72,153,0.5);background:rgba(236,72,153,0.08)}
+.contact-form{background:var(--dark-card);border:1px solid var(--glass-border);border-radius:20px;padding:36px}
+.form-group{margin-bottom:20px}
+.form-label{display:block;font-size:0.82rem;color:var(--text-secondary);margin-bottom:8px;font-weight:500;letter-spacing:0.5px}
+.form-input,.form-textarea{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--glass-border);border-radius:10px;padding:13px 16px;color:var(--text-primary);font-family:var(--font-body);font-size:0.9rem;transition:all 0.3s;outline:none;resize:none}
+.form-input:focus,.form-textarea:focus{border-color:var(--neon-blue);background:rgba(0,212,255,0.04);box-shadow:0 0 0 3px rgba(0,212,255,0.1)}
+.form-textarea{min-height:120px}
+.form-input::placeholder,.form-textarea::placeholder{color:var(--text-muted)}
+.btn-send{width:100%;padding:14px;background:linear-gradient(135deg,#00d4ff,#0080ff,#a855f7);color:#000;border-radius:10px;font-size:0.95rem;font-weight:700;border:none;cursor:pointer;transition:all 0.3s;font-family:var(--font-body);letter-spacing:0.5px}
+.btn-send:hover{transform:translateY(-2px);box-shadow:0 10px 40px rgba(0,212,255,0.4),0 0 60px rgba(168,85,247,0.2)}
+
+/* FOOTER */
+footer{background:var(--dark-surface);border-top:1px solid var(--glass-border);padding:32px 5%;text-align:center}
+.footer-inner{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.footer-logo{font-family:var(--font-display);font-size:1.1rem;font-weight:800;background:var(--gradient-blue);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.footer-copy{font-size:0.82rem;color:var(--text-muted)}
+.footer-links{display:flex;gap:20px}
+.footer-links a{font-size:0.82rem;color:var(--text-muted);text-decoration:none;transition:color 0.2s}
+.footer-links a:hover{color:var(--neon-blue)}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+.about-grid,.contact-grid{grid-template-columns:1fr}
+.counters-grid{grid-template-columns:repeat(2,1fr)}
+.nav-links{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(3,7,18,0.97);flex-direction:column;align-items:center;justify-content:center;gap:2rem;z-index:999}
+.nav-links.open{display:flex}
+.hamburger{display:flex;z-index:1000}
+}
+@media(max-width:600px){
+.counters-grid{grid-template-columns:repeat(2,1fr)}
+.about-stats{grid-template-columns:1fr}
+.footer-inner{flex-direction:column;text-align:center}
+section{padding:70px 5%}
+}
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- SCROLL PROGRESS -->
+<div id="scroll-progress" style="width:0"></div>
+
+<!-- LOADER -->
+<div id="loader">
+<div class="loader-logo">HK.</div>
+<div class="loader-bar"><div class="loader-fill"></div></div>
+<div class="loader-text">INITIALIZING PORTFOLIO...</div>
+</div>
+
+<!-- PARTICLES -->
+<canvas id="particles-canvas"></canvas>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+<div class="nav-inner">
+<a href="#home" class="nav-logo">HK.</a>
+<ul class="nav-links" id="navLinks">
+<li><a href="#home">Home</a></li>
+<li><a href="#about">About</a></li>
+<li><a href="#skills">Skills</a></li>
+<li><a href="#projects">Projects</a></li>
+<li><a href="#services">Services</a></li>
+<li><a href="#contact" class="nav-cta">Contact</a></li>
+</ul>
+<div class="hamburger" id="hamburger" aria-label="Toggle menu">
+<span></span><span></span><span></span>
+</div>
+</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+<div class="hero-bg-orb orb1"></div>
+<div class="hero-bg-orb orb2"></div>
+<div class="hero-bg-orb orb3"></div>
+<div class="hero-content">
+<div class="hero-badge">🚀 Available for Freelance Work</div>
+<h1 class="hero-name">Muhammad <span class="highlight">Hashim Khan</span></h1>
+<p class="hero-tagline">Beginner Web Developer &nbsp;|&nbsp; Front-End Developer &nbsp;|&nbsp; UI/UX Enthusiast</p>
+<div class="hero-typing-wrap"><span id="typed-text"></span></div>
+<div class="hero-buttons">
+<a href="#projects" class="btn btn-primary">🚀 View Projects</a>
+<a href="#contact" class="btn btn-secondary">💬 Contact Me</a>
+</div>
+</div>
+<div class="hero-scroll">
+<span>SCROLL</span>
+<div class="scroll-line"></div>
+</div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+<div class="section-divider"></div>
+<div class="about-grid reveal">
+<div class="about-img-wrap">
+<div class="about-img-frame">
+<div class="about-avatar">HK</div>
+<div class="about-glow"></div>
+</div>
+<div class="about-badge-wrap">
+<div class="about-badge">🟢 Open to Work</div>
+<div class="about-badge" style="color:var(--neon-purple);border-color:rgba(168,85,247,0.3);background:rgba(168,85,247,0.08)">📍 Pakistan</div>
+</div>
+</div>
+<div class="about-text">
+<span class="section-label">// about me</span>
+<h2 class="section-title">Crafting the <span class="grad">Digital Future</span></h2>
+<p>Hi! I'm <strong>Muhammad Hashim Khan</strong>, a passionate beginner web developer from Pakistan on a mission to turn ideas into beautiful, fast, and responsive web experiences.</p>
+<p>I specialize in front-end development with HTML, CSS, and JavaScript. Every project I build pushes me to learn more, grow faster, and create better digital experiences for real people.</p>
+<p>Currently leveling up my React skills and diving deep into full-stack development — with an unstoppable drive and 100% passion for coding.</p>
+<div class="about-stats">
+<div class="stat-card reveal">
+<span class="stat-num" data-count="25">0</span>
+<div class="stat-label">Projects Completed</div>
+</div>
+<div class="stat-card reveal">
+<span class="stat-num" data-count="10">0</span>
+<div class="stat-label">Technologies Learned</div>
+</div>
+<div class="stat-card reveal">
+<span class="stat-num" data-count="500">0</span>
+<div class="stat-label">Coding Hours</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" style="padding-top:0">
+<div style="max-width:900px;margin:0 auto">
+<span class="section-label text-center" style="display:block;text-align:center">// career</span>
+<h2 class="section-title text-center reveal">Work <span class="grad">Experience</span></h2>
+<div class="exp-card reveal">
+<div class="exp-header">
+<div>
+<div class="exp-role">Freelance Front-End Developer</div>
+<div class="exp-company">Self-Employed &nbsp;·&nbsp; Remote</div>
+</div>
+<div class="exp-period">2025 – Present</div>
+</div>
+<ul class="exp-list">
+<li>Built multiple responsive websites and landing pages for clients across different industries.</li>
+<li>Specialized in HTML, CSS, JavaScript, and modern UI design with a focus on user experience.</li>
+<li>Passionate about creating fast, beautiful, and accessible web experiences that convert visitors into customers.</li>
+<li>Delivered projects with clean, well-commented code and pixel-perfect designs.</li>
+</ul>
+</div>
+</div>
+</section>
+
+<!-- COUNTERS -->
+<section class="counters-section" style="padding:0">
+<div class="counters-grid">
+<div class="counter-item reveal">
+<div><span class="counter-num" data-count="25">0</span><span class="counter-suffix">+</span></div>
+<div class="counter-label">Projects Completed</div>
+</div>
+<div class="counter-item reveal">
+<div><span class="counter-num" data-count="500">0</span><span class="counter-suffix">+</span></div>
+<div class="counter-label">Coding Hours</div>
+</div>
+<div class="counter-item reveal">
+<div><span class="counter-num" data-count="10">0</span><span class="counter-suffix">+</span></div>
+<div class="counter-label">Technologies Learned</div>
+</div>
+<div class="counter-item reveal">
+<div><span class="counter-num" data-count="100">0</span><span class="counter-suffix">%</span></div>
+<div class="counter-label">Passion for Coding</div>
+</div>
+</div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+<div class="section-divider"></div>
+<span class="section-label text-center">// skills</span>
+<h2 class="section-title text-center reveal">Technical <span class="grad">Arsenal</span></h2>
+<p class="section-sub text-center reveal">Building with modern tools and constantly expanding my skill set.</p>
+<div class="skills-grid">
+<div class="skill-card blue reveal">
+<div class="skill-icon">🌐</div>
+<div class="skill-name">HTML5</div>
+<div class="skill-desc">Semantic markup, accessibility, SEO-friendly structure</div>
+<div class="skill-bar-wrap"><div class="skill-bar blue" data-width="95"></div></div>
+<div class="skill-pct">95%</div>
+</div>
+<div class="skill-card purple reveal">
+<div class="skill-icon">🎨</div>
+<div class="skill-name">CSS3</div>
+<div class="skill-desc">Flexbox, Grid, animations, glassmorphism effects</div>
+<div class="skill-bar-wrap"><div class="skill-bar purple" data-width="90"></div></div>
+<div class="skill-pct">90%</div>
+</div>
+<div class="skill-card blue reveal">
+<div class="skill-icon">⚡</div>
+<div class="skill-name">JavaScript</div>
+<div class="skill-desc">ES6+, DOM manipulation, APIs, async/await</div>
+<div class="skill-bar-wrap"><div class="skill-bar blue" data-width="80"></div></div>
+<div class="skill-pct">80%</div>
+</div>
+<div class="skill-card blue reveal">
+<div class="skill-icon">📱</div>
+<div class="skill-name">Responsive Design</div>
+<div class="skill-desc">Mobile-first, media queries, fluid layouts</div>
+<div class="skill-bar-wrap"><div class="skill-bar blue" data-width="95"></div></div>
+<div class="skill-pct">95%</div>
+</div>
+<div class="skill-card purple reveal">
+<div class="skill-icon">🔧</div>
+<div class="skill-name">Git & GitHub</div>
+<div class="skill-desc">Version control, branching, collaboration</div>
+<div class="skill-bar-wrap"><div class="skill-bar purple" data-width="75"></div></div>
+<div class="skill-pct">75%</div>
+</div>
+<div class="skill-card pink reveal">
+<div class="skill-icon">⚛️</div>
+<div class="skill-name">React</div>
+<div class="skill-desc">Currently learning — components, hooks, state</div>
+<div class="skill-bar-wrap"><div class="skill-bar pink" data-width="60"></div></div>
+<div class="skill-pct">60% (Learning)</div>
+</div>
+</div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+<div class="section-divider"></div>
+<span class="section-label text-center">// work</span>
+<h2 class="section-title text-center reveal">Featured <span class="grad">Projects</span></h2>
+<p class="section-sub text-center reveal">A showcase of projects I've built — from calculators to full landing pages.</p>
+<div class="projects-grid">
+
+<div class="project-card reveal">
+<div class="project-img proj-calc">
+<div class="project-img-bg">🧮</div>
+<div class="project-img-overlay">
+<a href="#" class="btn-sm btn-live">🚀 Live</a>
+<a href="#" class="btn-sm btn-github">GitHub</a>
+</div>
+</div>
+<div class="project-body">
+<div class="project-tags"><span class="project-tag">HTML</span><span class="project-tag">CSS</span><span class="project-tag">JavaScript</span></div>
+<div class="project-title">Smart Calculator App</div>
+<div class="project-desc">Modern dark-mode calculator with smooth animations, keyboard support, and full arithmetic operations.</div>
+<div class="project-buttons">
+<a href="#" class="btn-sm btn-live">Live Demo</a>
+<a href="#" class="btn-sm btn-github">GitHub</a>
+</div>
+</div>
+</div>
+
+<div class="project-card reveal">
+<div class="project-img proj-tasbeeh">
+<div class="project-img-bg">📿</div>
+<div class="project-img-overlay">
+<a href="#" class="btn-sm btn-live">🚀 Live</a>
+<a href="#" class="btn-sm btn-github">GitHub</a>
+</div>
+</div>
+<div class="project-body">
+<div class="project-tags"><span class="project-tag">HTML</span><span class="project-tag">CSS</span><span class="project-tag">JavaScript</span></div>
+<div class="project-title">Digital Tasbeeh Counter</div>
+<div class="project-desc">Beautiful Islamic counter app with save/reset functionality, local storage, and elegant Islamic UI design.</div>
+<div class="project-buttons">
+<a href="#" class="btn-sm btn-live">Live Demo</a>
+<a href="#" class="btn-sm btn-github">GitHub</a>
+</div>
+</div>
+</div>
+
+<div class="project-card reveal">
+<div class="project-img proj-weather">
+<div class="project-img-bg">🌤️</div>
+<div class="project-img-overlay">
+<a href="#" class="btn-sm btn-live">🚀 Live</a>
+<a href="#" class="btn-sm btn-github">GitHub</a>
+</div>
+</div>
+<div class="project-body">
+<div class="project-tags"><span class="project-tag">JavaScript</span><span class="project-tag">API</span><span class="project-tag">CSS</span></div>
+<div class="project-title">Weather Forecast App</div>
+<div class="project-desc">Real-time weather UI with live API data, location search, animated weather icons, and responsive layout.</div>
+<div class="project-buttons">
+<a href="#" class="btn-sm btn-live">Live Demo</a>
+<a href="#" class="btn-sm btn-github">GitHub</a>
+</div>
+</div>
+</div>
+
+<div class="project-card reveal">
+<div class="project-img proj-portfolio">
+<div class="project-img-bg">🌟</div>
+<div class="project-img-overlay">
+<a href="#" class="btn-sm btn-live">🚀 Live</a>
+<a href="#" class="btn-sm btn-github">GitHub</a>
+</div>
+</div>
+<div class="project-body">
+<div class="project-tags"><span class="project-tag">HTML</span><span class="project-tag">CSS</span><span class="project-tag">JS</span></div>
+<div class="project-title">Portfolio Website</div>
+<div class="project-desc">Personal portfolio with glassmorphism, particle animations, typing effects, and fully responsive design.</div>
+<div class="project-buttons">
+<a href="#" class="btn-sm btn-live">Live Demo</a>
+<a href="#" class="btn-sm btn-github">GitHub</a>
+</div>
+</div>
+</div>
+
+<div class="project-card reveal">
+<div class="project-img proj-todo">
+<div class="project-img-bg">✅</div>
+<div class="project-img-overlay">
+<a href="#" class="btn-sm btn-live">🚀 Live</a>
+<a href="#" class="btn-sm btn-github">GitHub</a>
+</div>
+</div>
+<div class="project-body">
+<div class="project-tags"><span class="project-tag">JavaScript</span><span class="project-tag">LocalStorage</span><span class="project-tag">CSS</span></div>
+<div class="project-title">To-Do Task Manager</div>
+<div class="project-desc">Full CRUD task manager — add, edit, delete, and mark tasks complete. Data persists via local storage.</div>
+<div class="project-buttons">
+<a href="#" class="btn-sm btn-live">Live Demo</a>
+<a href="#" class="btn-sm btn-github">GitHub</a>
+</div>
+</div>
+</div>
+
+<div class="project-card reveal">
+<div class="project-img proj-ecom">
+<div class="project-img-bg">🛍️</div>
+<div class="project-img-overlay">
+<a href="#" class="btn-sm btn-live">🚀 Live</a>
+<a href="#" class="btn-sm btn-github">GitHub</a>
+</div>
+</div>
+<div class="project-body">
+<div class="project-tags"><span class="project-tag">HTML</span><span class="project-tag">CSS</span><span class="project-tag">JavaScript</span></div>
+<div class="project-title">E-Commerce Landing Page</div>
+<div class="project-desc">Premium product showcase page with modern UI, smooth hover effects, product cards, and call-to-action sections.</div>
+<div class="project-buttons">
+<a href="#" class="btn-sm btn-live">Live Demo</a>
+<a href="#" class="btn-sm btn-github">GitHub</a>
+</div>
+</div>
+</div>
+
+<div class="project-card reveal">
+<div class="project-img proj-currency">
+<div class="project-img-bg">💱</div>
+<div class="project-img-overlay">
+<a href="#" class="btn-sm btn-live">🚀 Live</a>
+<a href="#" class="btn-sm btn-github">GitHub</a>
+</div>
+</div>
+<div class="project-body">
+<div class="project-tags"><span class="project-tag">JavaScript</span><span class="project-tag">API</span><span class="project-tag">CSS</span></div>
+<div class="project-title">Currency Converter</div>
+<div class="project-desc">Multi-currency conversion tool with live exchange rates, clean interface, and support for 150+ currencies.</div>
+<div class="project-buttons">
+<a href="#" class="btn-sm btn-live">Live Demo</a>
+<a href="#" class="btn-sm btn-github">GitHub</a>
+</div>
+</div>
+</div>
+
+<div class="project-card reveal">
+<div class="project-img proj-restaurant">
+<div class="project-img-bg">🍽️</div>
+<div class="project-img-overlay">
+<a href="#" class="btn-sm btn-live">🚀 Live</a>
+<a href="#" class="btn-sm btn-github">GitHub</a>
+</div>
+</div>
+<div class="project-body">
+<div class="project-tags"><span class="project-tag">HTML</span><span class="project-tag">CSS</span><span class="project-tag">JavaScript</span></div>
+<div class="project-title">Restaurant Website</div>
+<div class="project-desc">Professional food business website with menu showcase, booking form, gallery, and responsive mobile design.</div>
+<div class="project-buttons">
+<a href="#" class="btn-sm btn-live">Live Demo</a>
+<a href="#" class="btn-sm btn-github">GitHub</a>
+</div>
+</div>
+</div>
+
+</div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+<div class="section-divider"></div>
+<span class="section-label text-center">// services</span>
+<h2 class="section-title text-center reveal">What I <span class="grad">Offer</span></h2>
+<p class="section-sub text-center reveal">Professional web development services tailored to your needs and goals.</p>
+<div class="services-grid">
+<div class="service-card reveal">
+<span class="service-icon">🎨</span>
+<div class="service-title">Website Design</div>
+<div class="service-desc">Stunning, modern website designs with premium aesthetics, animations, and unforgettable visual identity.</div>
+</div>
+<div class="service-card reveal">
+<span class="service-icon">🚀</span>
+<div class="service-title">Landing Pages</div>
+<div class="service-desc">High-converting landing pages built to capture attention, communicate value, and drive real results.</div>
+</div>
+<div class="service-card reveal">
+<span class="service-icon">📱</span>
+<div class="service-title">Responsive Websites</div>
+<div class="service-desc">Mobile-first websites that look and perform flawlessly across all devices, screen sizes, and browsers.</div>
+</div>
+<div class="service-card reveal">
+<span class="service-icon">⚡</span>
+<div class="service-title">Front-End Development</div>
+<div class="service-desc">Clean, fast, and maintainable code using HTML5, CSS3, and modern JavaScript to bring designs to life.</div>
+</div>
+</div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+<div class="section-divider"></div>
+<span class="section-label text-center">// testimonials</span>
+<h2 class="section-title text-center reveal">What Clients <span class="grad">Say</span></h2>
+<div class="testimonials-grid" style="margin-top:48px">
+<div class="testi-card reveal">
+<div class="stars">★★★★★</div>
+<div class="testi-quote">"</div>
+<div class="testi-text">Excellent web developer with great attention to detail. Hashim delivered exactly what I envisioned — clean, modern, and perfectly responsive.</div>
+<div class="testi-author">
+<div class="testi-avatar" style="background:rgba(0,212,255,0.15);color:var(--neon-blue)">AK</div>
+<div><div class="testi-name">Ahmed Khan</div><div class="testi-role">Business Owner</div></div>
+</div>
+</div>
+<div class="testi-card reveal">
+<div class="stars">★★★★★</div>
+<div class="testi-quote">"</div>
+<div class="testi-text">Delivered a beautiful responsive website ahead of schedule. Very professional, communicative, and genuinely passionate about his work.</div>
+<div class="testi-author">
+<div class="testi-avatar" style="background:rgba(168,85,247,0.15);color:var(--neon-purple)">SR</div>
+<div><div class="testi-name">Sara Raza</div><div class="testi-role">Startup Founder</div></div>
+</div>
+</div>
+<div class="testi-card reveal">
+<div class="stars">★★★★★</div>
+<div class="testi-quote">"</div>
+<div class="testi-text">Creative designs and smooth animations that impressed our whole team. Hashim has a real talent for making things look premium.</div>
+<div class="testi-author">
+<div class="testi-avatar" style="background:rgba(236,72,153,0.15);color:var(--neon-pink)">MF</div>
+<div><div class="testi-name">M. Farhan</div><div class="testi-role">Marketing Manager</div></div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+<div class="section-divider"></div>
+<span class="section-label text-center">// contact</span>
+<h2 class="section-title text-center reveal">Let's <span class="grad">Work Together</span></h2>
+<p class="section-sub text-center reveal">Have a project in mind? Let's turn your ideas into a beautiful digital reality.</p>
+<div class="contact-grid reveal">
+<div class="contact-info">
+<h3>Get In Touch</h3>
+<p>I'm currently available for freelance projects and collaborations. Whether you need a landing page, full website, or just want to say hi — my inbox is always open.</p>
+<div class="contact-detail">
+<div class="contact-detail-icon">📧</div>
+<div class="contact-detail-text"><span>Email</span><a href="mailto:hashimkhan@email.com">hashimkhan@email.com</a></div>
+</div>
+<div class="contact-detail">
+<div class="contact-detail-icon">📍</div>
+<div class="contact-detail-text"><span>Location</span><a>Pakistan</a></div>
+</div>
+<div class="contact-detail">
+<div class="contact-detail-icon">💼</div>
+<div class="contact-detail-text"><span>Status</span><a style="color:#22c55e">Available for Work 🟢</a></div>
+</div>
+<div class="social-links">
+<a href="#" class="social-btn gh" title="GitHub">🐙</a>
+<a href="#" class="social-btn li" title="LinkedIn">💼</a>
+<a href="#" class="social-btn fb" title="Facebook">📘</a>
+<a href="#" class="social-btn ig" title="Instagram">📸</a>
+</div>
+</div>
+<div class="contact-form">
+<div class="form-group">
+<label class="form-label">YOUR NAME</label>
+<input type="text" class="form-input" placeholder="Muhammad Ali">
+</div>
+<div class="form-group">
+<label class="form-label">EMAIL ADDRESS</label>
+<input type="email" class="form-input" placeholder="ali@example.com">
+</div>
+<div class="form-group">
+<label class="form-label">MESSAGE</label>
+<textarea class="form-textarea" placeholder="Tell me about your project..."></textarea>
+</div>
+<button class="btn-send" id="sendBtn">🚀 Send Message</button>
+</div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+<div class="footer-inner">
+<div class="footer-logo">HK.</div>
+<div class="footer-copy">© 2026 Hashim Khan | Web Developer — Turning ideas into beautiful websites</div>
+<div class="footer-links">
+<a href="#home">Home</a>
+<a href="#projects">Projects</a>
+<a href="#contact">Contact</a>
+</div>
+</div>
+</footer>
+
+<script>
+// CURSOR
+const cursor=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px'});
+(function animRing(){rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing)})();
+document.querySelectorAll('a,button,.btn,.btn-sm,.skill-card,.project-card,.service-card,.testi-card,.social-btn').forEach(el=>{
+el.addEventListener('mouseenter',()=>{cursor.style.transform='translate(-50%,-50%) scale(2.5)';ring.style.width='60px';ring.style.height='60px'});
+el.addEventListener('mouseleave',()=>{cursor.style.transform='translate(-50%,-50%) scale(1)';ring.style.width='36px';ring.style.height='36px'});
+});
+
+// SCROLL PROGRESS
+window.addEventListener('scroll',()=>{
+const p=(window.scrollY/(document.body.scrollHeight-window.innerHeight))*100;
+document.getElementById('scroll-progress').style.width=p+'%';
+const nav=document.getElementById('navbar');
+nav.classList.toggle('scrolled',window.scrollY>50);
+});
+
+// LOADER
+window.addEventListener('load',()=>{
+setTimeout(()=>{document.getElementById('loader').classList.add('hidden')},2200);
+});
+
+// HAMBURGER
+document.getElementById('hamburger').addEventListener('click',()=>{
+document.getElementById('navLinks').classList.toggle('open');
+});
+document.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',()=>{
+document.getElementById('navLinks').classList.remove('open');
+}));
+
+// PARTICLES
+(function(){
+const canvas=document.getElementById('particles-canvas');
+const ctx=canvas.getContext('2d');
+let W=canvas.width=window.innerWidth,H=canvas.height=window.innerHeight;
+window.addEventListener('resize',()=>{W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight});
+const NUM=80;
+const particles=Array.from({length:NUM},()=>({
+x:Math.random()*W,y:Math.random()*H,
+vx:(Math.random()-0.5)*0.4,vy:(Math.random()-0.5)*0.4,
+r:Math.random()*1.5+0.5,
+color:`hsl(${Math.random()<0.5?195:270},100%,65%)`
+}));
+function draw(){
+ctx.clearRect(0,0,W,H);
+particles.forEach(p=>{
+p.x+=p.vx;p.y+=p.vy;
+if(p.x<0)p.x=W;if(p.x>W)p.x=0;
+if(p.y<0)p.y=H;if(p.y>H)p.y=0;
+ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+ctx.fillStyle=p.color;ctx.fill();
+});
+particles.forEach((a,i)=>{
+particles.slice(i+1).forEach(b=>{
+const d=Math.hypot(a.x-b.x,a.y-b.y);
+if(d<120){
+ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
+ctx.strokeStyle=`rgba(0,212,255,${0.12*(1-d/120)})`;ctx.lineWidth=0.5;ctx.stroke();
+}
+});
+});
+requestAnimationFrame(draw);
+}
+draw();
+})();
+
+// TYPING ANIMATION
+(function(){
+const texts=["Turning ideas into beautiful websites.","Building responsive, fast web experiences.","Learning. Creating. Growing every day.","Future Full-Stack Developer in progress."];
+let ti=0,ci=0,del=false;
+const el=document.getElementById('typed-text');
+function type(){
+const t=texts[ti];
+if(!del){
+el.textContent=t.slice(0,++ci);
+if(ci===t.length){del=true;setTimeout(type,2000);return}
+}else{
+el.textContent=t.slice(0,--ci);
+if(ci===0){del=false;ti=(ti+1)%texts.length}
+}
+setTimeout(type,del?40:80);
+}
+setTimeout(type,2400);
+})();
+
+// REVEAL
+const observer=new IntersectionObserver((entries)=>{
+entries.forEach(e=>{
+if(e.isIntersecting){
+e.target.classList.add('visible');
+// Animate skill bars
+e.target.querySelectorAll('.skill-bar[data-width]').forEach(bar=>{
+bar.style.width=bar.dataset.width+'%';
+});
+// Animate counters
+e.target.querySelectorAll('[data-count]').forEach(el=>{
+const target=+el.dataset.count;
+let cur=0;
+const inc=Math.ceil(target/60);
+const timer=setInterval(()=>{
+cur=Math.min(cur+inc,target);
+el.textContent=cur;
+if(cur>=target)clearInterval(timer);
+},25);
+});
+}
+});
+},{threshold:0.15});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+// SEND BUTTON
+document.getElementById('sendBtn').addEventListener('click',function(){
+const inputs=document.querySelectorAll('.form-input,.form-textarea');
+let valid=true;
+inputs.forEach(i=>{if(!i.value.trim()){i.style.borderColor='rgba(236,72,153,0.6)';valid=false;}else{i.style.borderColor=''}});
+if(valid){
+this.textContent='✅ Message Sent!';
+this.style.background='linear-gradient(135deg,#22c55e,#16a34a)';
+setTimeout(()=>{
+this.textContent='🚀 Send Message';
+this.style.background='';
+inputs.forEach(i=>{i.value='';i.style.borderColor=''});
+},3000);
+}
+});
+</script>
+</body>
+</html>
